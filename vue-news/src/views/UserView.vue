@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <div>
     <user-profile></user-profile>
     <!-- <p>name: {{ userInfo.id }}</p>
@@ -7,17 +7,18 @@
   </div>
 </template>
 <script>
-// import axios from 'axios';
 import UserProfile from '../components/UserProfile.vue';
+// import axios from 'axios';
+
 export default {
-  component: {
+  components: {
     UserProfile,
   },
-  computed: {
-    userInfo() {
-      return this.$store.state.user;
-    },
-  },
+  // computed: {
+  //   userInfo() {
+  //     return this.$store.state.user;
+  //   },
+  // },
   created() {
     // console.log(this.$route.params.id);
     const userName = this.$route.params.id;
