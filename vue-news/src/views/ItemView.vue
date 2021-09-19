@@ -1,8 +1,9 @@
 <template lang="">
   <div>
     <section>
-      <!-- 질문 상세 정보 -->
-      <div class="user-container">
+      <!-- 사용자 정보 -->
+      <user-profile></user-profile>
+      <!-- <div class="user-container">
         <div>
           <i class="fas fa-user"></i>
         </div>
@@ -16,10 +17,10 @@
         </div>
       </div>
       <h2>{{ fetchedItem.title }}</h2>
-    </section>
-    <section>
+    </section> 
+    <section> -->
       <!-- 질문 댓글 -->
-      <div v-html="fetchedItem.content"></div>
+      <!-- <div v-html="fetchedItem.content"></div> -->
     </section>
     <!--{{ this.$store.state.item }}-->
     <!--<p>{{ fetchedItem.title }}</p>
@@ -27,8 +28,12 @@
   </div>
 </template>
 <script>
+import userProfile from '../components/UserProfile.vue';
 import { mapGetters } from 'vuex';
 export default {
+  components: {
+    userProfile,
+  },
   computed: {
     ...mapGetters(['fetchedItem']),
     // itemInfo() {
