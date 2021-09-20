@@ -1,6 +1,6 @@
 <template>
   <div>
-    <user-profile></user-profile>
+    <user-profile :info="userInfo"></user-profile>
     <!-- <p>name: {{ userInfo.id }}</p>
     <p>karma: {{ userInfo.karma }}</p>
     <p>created: {{ userInfo.created }}</p> -->

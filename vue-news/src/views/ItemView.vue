@@ -2,7 +2,10 @@
   <div>
     <section>
       <!-- 사용자 정보 -->
-      <user-profile></user-profile>
+      <user-profile :info="fetchedItem">
+        <div slot="username">{{ fetchedItem.user }}</div>
+        <template slot="time">{{ fetchedItem.time_ago }}</template>
+      </user-profile>
       <!-- <div class="user-container">
         <div>
           <i class="fas fa-user"></i>
@@ -19,9 +22,15 @@
       <h2>{{ fetchedItem.title }}</h2>
     </section> 
     <section> -->
-      <!-- 질문 댓글 -->
-      <!-- <div v-html="fetchedItem.content"></div> -->
     </section>
+    <section>
+      <h2>{{ fetchedItem.item }}</h2>
+    </section>
+    <section>
+      <!-- 질문 댓글 -->
+      <div v-html="fetchedItem.content"></div>
+    </section>
+
     <!--{{ this.$store.state.item }}-->
     <!--<p>{{ fetchedItem.title }}</p>
     <div>{{ fetchedItem.content }}</div>-->
