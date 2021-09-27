@@ -6,22 +6,6 @@
         <div slot="username">{{ fetchedItem.user }}</div>
         <template slot="time">{{ fetchedItem.time_ago }}</template>
       </user-profile>
-      <!-- <div class="user-container">
-        <div>
-          <i class="fas fa-user"></i>
-        </div>
-        <div class="user-description">
-          <router-link :to="`/user/${fetchedItem.user}`">{{
-            fetchedItem.user
-          }}</router-link>
-          <div class="time">
-            {{ fetchedItem.time_ago }}
-          </div>
-        </div>
-      </div>
-      <h2>{{ fetchedItem.title }}</h2>
-    </section> 
-    <section> -->
     </section>
     <section>
       <h2>{{ fetchedItem.item }}</h2>
@@ -30,10 +14,6 @@
       <!-- 질문 댓글 -->
       <div v-html="fetchedItem.content"></div>
     </section>
-
-    <!--{{ this.$store.state.item }}-->
-    <!--<p>{{ fetchedItem.title }}</p>
-    <div>{{ fetchedItem.content }}</div>-->
   </div>
 </template>
 <script>

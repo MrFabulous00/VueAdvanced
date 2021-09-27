@@ -1,13 +1,28 @@
-<template>
+<template lang="">
   <div>
-    <list-item></list-item>
+    <div v-for="user in users">{{ user.title }}</div>
   </div>
 </template>
 <script>
-import ListItem from '../components/ListItem.vue';
+import { fetchNewsList } from '../api/index';
+import axios from 'axios';
 export default {
-  components: {
-    ListItem,
+  data() {
+    return {
+      users: [],
+    };
+  },
+  created() {
+    var vm = this;
+    fetchNewsList()
+      .then(function(response) {
+        console.log(response);
+        vm.users = response.data;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   },
 };
 </script>
+<style lang=""></style>

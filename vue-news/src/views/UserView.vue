@@ -1,9 +1,10 @@
 <template>
   <div>
-    <user-profile :info="userInfo"></user-profile>
-    <!-- <p>name: {{ userInfo.id }}</p>
-    <p>karma: {{ userInfo.karma }}</p>
-    <p>created: {{ userInfo.created }}</p> -->
+    <user-profile :info="userInfo">
+      <div slot="username">{{ user.id }}</div>
+      <template slot="time">{{ user.created }}</template>
+      <div slot="karma">{{ userInfo.karma }}</div>
+    </user-profile>
   </div>
 </template>
 <script>
@@ -14,11 +15,11 @@ export default {
   components: {
     UserProfile,
   },
-  // computed: {
-  //   userInfo() {
-  //     return this.$store.state.user;
-  //   },
-  // },
+  computed: {
+    userInfo() {
+      return this.$store.state.user;
+    },
+  },
   created() {
     // console.log(this.$route.params.id);
     const userName = this.$route.params.id;

@@ -1,6 +1,6 @@
 function getData(callbackFunc) {
   $.get('url 주소/products/1', function(response) {
-    // 서버에서 받은 데이터 responsefmf callbackFunc() 함수에 넘겨줌
+    // 서버에서 받은 데이터 response를 callbackFunc() 함수에 넘겨줌
     callbackFunc(response);
   });
 }
@@ -79,3 +79,37 @@ async function logTodoTitle() {
     console.log(error);
   }
 }
+/////////
+function callAjax() {
+  return new Promise(function(resolve, reject) {
+    $.ajax({
+      url:
+        'https://www.inflearn.com/course/vue-js/lecture/17008?tab=curriculum&speed=1.5',
+      sucess: function(data) {
+        resolve(data);
+      },
+    });
+  });
+}
+
+function fetchData() {
+  var result = [];
+
+  callAjax().then(function(data) {
+    console.log('데이터 호출 결과', data);
+    result = data;
+    console.log('함수 결과', result);
+  });
+
+  // $.ajax({
+  //   url:
+  //     'https://www.inflearn.com/course/vue-js/lecture/17008?tab=curriculum&speed=1.5',
+  //   sucess: function(data) {
+  //     console.log('데이터 호출 결과', data);
+  //     result = data;
+  //     console.log('함수 결과', result);
+  //   },
+  // });
+}
+
+fetchData();
