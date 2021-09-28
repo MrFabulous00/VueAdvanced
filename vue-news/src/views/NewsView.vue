@@ -1,27 +1,20 @@
 <template lang="">
   <div>
-    <div v-for="user in users">{{ user.title }}</div>
+    <div v-for="user in this.$store.state.news">{{ user.title }}</div>
   </div>
 </template>
 <script>
-import { fetchNewsList } from '../api/index';
-import axios from 'axios';
 export default {
-  data() {
-    return {
-      users: [],
-    };
-  },
   created() {
-    var vm = this;
-    fetchNewsList()
-      .then(function(response) {
-        console.log(response);
-        vm.users = response.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    // fetchNewsList()
+    //   .then((response) => {
+    //     console.log(response);
+    //     this.users = response.data;
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    this.$store.dispatch('FETCH_NEWS');
   },
 };
 </script>
