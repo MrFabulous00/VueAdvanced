@@ -1,32 +1,28 @@
 <template lang="">
-  <!-- 질문 상세 정보 -->
-  <div class="user-container">
-    <div>
+  <div>
+    <div class="user-container">
       <i class="fas fa-user"></i>
     </div>
-    <div class="user-description">
-      <slot name="username">
-        <!-- 상위 컴포넌트에서 정의할 영역 -->
-      </slot>
-      <!-- <div>{{ userInfo.id }}</div> -->
-      <!-- <router-link :to="`/user/${userInfo.user}`">
-        {{ userInfo.id }}
-      </router-link> -->
-      <div class="time">
-        <!-- {{ userInfo.created }} -->
-        <slot name="time">
+      <div class="user-description">
+        <slot name="username">
           <!-- 상위 컴포넌트에서 정의할 영역 -->
         </slot>
+          <div class="time">
+            <slot name="time">
+              <!-- 상위 컴포넌트에서 정의할 영역-->
+            </slot>
+            </div>
       </div>
-    </div>
+      <slot name="karma">
+                      <!-- 상위 컴포넌트에서 정의할 영역-->
+      </slot>
+      </div>
   </div>
 </template>
 <script>
 export default {
-  computed: {
-    userInfo() {
-      return this.$store.state.user;
-    },
+  props: {
+    info:Object
   },
 };
 </script>

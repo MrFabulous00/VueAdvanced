@@ -9,9 +9,9 @@ import {
 export default {
   FETCH_NEWS({ commit }) {
     fetchNewsList()
-      .then((data) => {
-        // console.log(response.data);
-        commit('SET_NEWS', data);
+      .then((response) => {
+        commit('SET_NEWS', response.data);
+        return response;
       })
       .catch((error) => {
         console.log(error);
@@ -20,7 +20,6 @@ export default {
   FETCH_JOBS({ commit }) {
     fetchJobsList()
       .then((data) => {
-        // console.log(response);
         commit('SET_JOBS', data);
       })
       .catch((error) => {
