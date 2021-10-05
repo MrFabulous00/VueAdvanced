@@ -1,51 +1,54 @@
-<template lang="">
-  <div>
-    <section>
-      <!-- 사용자 정보 -->
-      <user-profile :info="fetchedItem">
-        <router-link slot="username" :to="`/user/${fetchedItem.user}`">
-          {{ fetchedItem.user }}
-        </router-link>
-        <template slot="time">
-          {{ 'Posted ' + fetchedItem.time_ago }}
-        </template>
-      </user-profile>
+<template>
+  <div class="home">
+    <section class="header-container">
+      <UserProfile :user-info="fetchedItem"></UserProfile>
     </section>
     <section>
-      <h2>{{ fetchedItem.title }}</h2>
+      <h2>{{ userQuestion }}</h2>
+      <div v-html="userContent" class="content"></div>
     </section>
     <section>
-      <!-- 질문 댓글 -->
-      <div v-html="fetchedItem.content"></div>
+      <h3>Comments</h3>
+      <div v-for="item in fetchedItem.comments" :key="item.id" class="content">
+        <UserProfile :user-info="item"></UserProfile>
+        <div v-html="item.content"></div>
+      </div>
     </section>
   </div>
 </template>
+
 <script>
-import userProfile from '../components/UserProfile.vue';
 import { mapGetters } from 'vuex';
+import UserProfile from '../components/UserProfile.vue';
+import bus from '../utils/bus.js';
+
 export default {
   components: {
-    userProfile,
-  },
-  computed: {
-    // itemInfo() {
-    //   return this.$sore.state.item;
-    // },
-    ...mapGetters(['fetchedItem']),
+    UserProfile,
   },
   created() {
-    const itemId = this.$route.params.id;
-    this.$store.dispatch('FETCH_ITEM', itemId);
+    bus.$emit('off:progress');
   },
-};
+  computed: {
+    ...mapGetters([
+      'fetchedItem', 'userName', 'userTimeAgo', 
+      'userQuestion', 'userContent', 'contentPoints']),
+  },
+}
 </script>
+
 <style scoped>
+.home {
+  padding: 0 1.8rem;
+}
+.header-container {
+  padding-top: 1rem;
+}
 .user-container {
   display: flex;
   align-items: center;
-  padding: 0.5rem;
 }
-.fa-user {
+.fa-user-circle {
   font-size: 2.5rem;
 }
 .user-description {
@@ -53,5 +56,13 @@ export default {
 }
 .time {
   font-size: 0.7rem;
+}
+h3 {
+  margin-bottom: 0.5rem;
+  margin-left: 0.2rem;
+}
+.content {
+  border: ridge;
+  padding: 0.5rem;
 }
 </style>

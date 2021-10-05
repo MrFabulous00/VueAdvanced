@@ -1,38 +1,43 @@
-<template lang="">
-  <div>
-    <div class="user-container">
-      <i class="fas fa-user"></i>
+<template>
+  <div class="user-container">
+    <div>
+      <i class="fas fa-user-circle"></i>
     </div>
-      <div class="user-description">
-        <slot name="username">
-          <!-- 상위 컴포넌트에서 정의할 영역 -->
-        </slot>
-          <div class="time">
-            <slot name="time">
-              <!-- 상위 컴포넌트에서 정의할 영역-->
-            </slot>
-            </div>
+    <div class="user-description">
+      <slot name="userName"></slot>
+      <router-link :to="'/user/' + userInfo.user">{{ userInfo.user }}</router-link>
+      <div class="time">{{ userInfo.time_ago || 'Joined ' + userInfo.created + ','}}
+        <span v-if="userInfo.points">, {{ userInfo.points }} points</span>
+        <slot name="userKarma"></slot>
       </div>
-      <slot name="karma">
-                      <!-- 상위 컴포넌트에서 정의할 영역-->
-      </slot>
-      </div>
+    </div>
   </div>
 </template>
+
 <script>
+/* eslint-disable */
+import { mapGetters } from 'vuex';
+
 export default {
   props: {
-    info:Object
+    userInfo: {
+      type: Object
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'userContent', 'userQuestion', 'userName', 'userTimeAgo', 'contentPoints',
+    ]),
   },
 };
 </script>
+
 <style scoped>
 .user-container {
   display: flex;
   align-items: center;
-  padding: 0.5rem;
 }
-.fa-user {
+.fa-user-circle {
   font-size: 2.5rem;
 }
 .user-description {
@@ -40,5 +45,6 @@ export default {
 }
 .time {
   font-size: 0.7rem;
+  color: #828282;
 }
 </style>

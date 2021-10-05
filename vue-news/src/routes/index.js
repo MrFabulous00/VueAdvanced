@@ -1,84 +1,73 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import NewsView from '../views/NewsView.vue';
-import AskView from '../views/AskView.vue';
-import JobsView from '../views/JobsView.vue';
-import ItemView from '../views/ItemView.vue';
-import UserView from '../views/UserView.vue';
-import createListView from '../views/CreateListView.js';
+import { ItemView, UserView } from '../views';
+import createListView from '../views/CreateListView';
 import bus from '../utils/bus.js';
-import { store } from '../store/index.js';
+import store from '../store/index.js';
+
 Vue.use(VueRouter);
 
-export const router = new VueRouter({
+export default new VueRouter({
   mode: 'history',
   routes: [
     {
       path: '/',
-      redirect: '/news',
+      redirect: '/news' 
     },
     {
-      // path: url 주소
       path: '/news',
       name: 'news',
-      // component: createListView('NewsView'),
-      component: NewsView,
-      beforeEnter: (to, from, next) => {
-        bus.$emit('start:spinner');
-
-        store
-          .dispatch('FETCH_LIST', to.name)
-          .then(() => {
-            console.log('fetched');
-            // bus.$emit('end:spinner');
-            next();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+      component: createListView('NewsView'),
+      beforeEnter(routeTo, routeFrom, next) {
+        bus.$emit('on:progress');
+        store.dispatch('FETCH_LIST', routeTo.name)
+          .then(next())
+          .catch((() => new Error('failed to fetch news items')));
       },
     },
     {
       path: '/ask',
       name: 'ask',
-      // component: createListView('AskView'),
-      component: AskView,
-      beforeEnter: (to, from, next) => {
-        bus.$emit('start:spinner');
-        store
-          .dispatch('FETCH_LIST', to.name)
-          .then(() => {
-            // console.log('fetched');
-            // bus.$emit('end:spinner');
-            next();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+      component: createListView('AskView'),
+      beforeEnter(routeTo, routeFrom, next) {
+        bus.$emit('on:progress');
+        store.dispatch('FETCH_LIST', routeTo.name)
+          .then(next())
+          .catch((() => new Error('failed to fetch news items')));
       },
     },
     {
       path: '/jobs',
       name: 'jobs',
-      // component: createListView('JobsView'),
-      component: JobsView,
-      beforeEnter: (to, from, next) => {
-        bus.$emit('start:spinner');
-        store
-          .dispatch('FETCH_LIST', to.name)
-          .then(() => next())
-          .catch((error) => {
-            console.log(error);
-          });
+      component: createListView('JobsView'),
+      beforeEnter(routeTo, routeFrom, next) {
+        bus.$emit('on:progress');
+        store.dispatch('FETCH_LIST', routeTo.name)
+          .then(next())
+          .catch((() => new Error('failed to fetch news items')));
       },
     },
     {
       path: '/item/:id',
       component: ItemView,
+      beforeEnter(routeTo, routeFrom, next) {
+        bus.$emit('on:progress');
+        const itemId = routeTo.params.id;
+        store.dispatch('FETCH_ITEM', itemId)
+          .then(() => next())
+          .catch(err => new Error('failed to fetch item details', err));
+      },
     },
     {
       path: '/user/:id',
       component: UserView,
-    },
-  ],
-});
+      beforeEnter(routeTo, routeFrom, next) {
+        bus.$emit('on:progress');
+        const itemId = routeTo.params.id;
+        store.dispatch('FETCH_USER', itemId)
+          .then(() => next())
+          .catch(err => new Error('failed to fetch user profile', err));
+      },
+    }
+  ]
+})

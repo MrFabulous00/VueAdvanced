@@ -1,27 +1,34 @@
-<template lang="">
-  <div>
-    <user-profile :info="userInfo">
-      <div slot="username">{{ userInfo.id }}</div>
-      <span slot="time">{{ 'Joined ' + userInfo.created }}, </span>
-      <span slot="karma">{{ userInfo.karma }}</span>
+<template>
+  <div class="container">
+    <h2>User Profile</h2>
+    <user-profile :userInfo="fetchedUser">
+      <div slot="userName">{{ fetchedUser.id }}</div>
+      <span slot="userKarma">{{ fetchedUser.karma }} karma</span>
     </user-profile>
+
   </div>
 </template>
+
 <script>
+import { mapGetters } from 'vuex';
 import UserProfile from '../components/UserProfile.vue';
+import bus from '../utils/bus.js';
+
 export default {
   components: {
-    UserProfile,
+    UserProfile
   },
-  // computed: {
-  //   userInfo() {
-  //     return this.$store.state.user;
-  //   },
-  // },
   created() {
-    const userName = this.$route.params.id;
-    this.$store.dispatch('FETCH_USER', userName);
+    bus.$emit('off:progress');
   },
-};
+  computed: {
+    ...mapGetters(['fetchedUser']),
+  },
+}
 </script>
-<style lang=""></style>
+
+<style scoped>
+.container {
+  padding: 0 0.5rem;
+}
+</style>
